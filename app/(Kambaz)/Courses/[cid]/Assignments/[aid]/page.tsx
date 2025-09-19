@@ -101,5 +101,10 @@ export default function AssignmentEditor() {
                     </td>
                 </tr>
             </table>
+                <hr />
+            <div style={{display: 'flex', float: 'right'}}>
+                <button>Cancel</button>
+                <button>Save</button>
+            </div>
         </div>
     );}
