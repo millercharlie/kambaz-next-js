@@ -1,19 +1,63 @@
-import Link from "next/link";
+import GreenCheckmark from '@/app/(Kambaz)/Courses/[cid]/Modules/GreenCheckmark';
+import Link from 'next/link';
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  FormControl,
+} from 'react-bootstrap';
+
 export default function Profile() {
-    return (
-        <div id="wd-profile-screen">
-            <h3>Profile</h3>
-            <input defaultValue="alice" placeholder="username" className="wd-username"/><br/>
-            <input defaultValue="123"   placeholder="password" type="password"
-                   className="wd-password" /><br/>
-            <input defaultValue="Alice" placeholder="First Name" id="wd-firstname" /><br/>
-            <input defaultValue="Wonderland" placeholder="Last Name" id="wd-lastname" /><br/>
-            <input defaultValue="2000-01-01" type="date" id="wd-dob" /><br/>
-            <input defaultValue="alice@wonderland" type="email" id="wd-email" /><br/>
-            <select defaultValue="FACULTY" id="wd-role">
-                <option value="USER">User</option>       <option value="ADMIN">Admin</option>
-                <option value="FACULTY">Faculty</option> <option value="STUDENT">Student</option>
-            </select><br/>
-            <Link href="Signin" > Sign out </Link>
-        </div>
-    );}
+  return (
+    <div id='wd-profile-screen'>
+      <h3>Profile</h3>
+      <FormControl
+        id='wd-username'
+        defaultValue='alice'
+        placeholder='Username'
+        className='mb-2'
+      />
+      <FormControl
+        id='wd-password'
+        defaultValue='123'
+        placeholder='Password'
+        type='password'
+        className='mb-2'
+      />
+      <FormControl
+        id='wd-firstname'
+        defaultValue='Alice'
+        placeholder='First Name'
+        className='mb-2'
+      />
+      <FormControl
+        defaultValue='Wonderland'
+        placeholder='Last Name'
+        id='wd-lastname'
+        className='mb-2'
+      />
+      <FormControl
+        defaultValue='2003-10-16'
+        type='date'
+        id='wd-dob'
+        className='mb-2'
+      />
+      <FormControl
+        defaultValue='alice@wonderland'
+        type='email'
+        id='wd-email'
+        className='mb-2'
+      />
+      <FormControl
+        defaultValue='User'
+        type='dropdown'
+        id='wd-role'
+        className='mb-2'
+      />
+      <Link href='/Account/Signin' className='btn btn-danger w-100 mb-2'>
+        Sign out
+      </Link>
+    </div>
+  );
+}

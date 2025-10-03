@@ -1,0 +1,15 @@
+trailingComma: es5
+useTabs: false
+tabWidth: 2
+semi: true
+
+"plugins": [ "@trivago/prettier-plugin-sort-imports" ]
+
+singleQuote: true
+jsxSingleQuote: true
+
+bracketSpacing: true
+# htmlWhitespaceSensitivity: css
+
+importOrderSeparation: true
+importOrderSortSpecifiers: true
