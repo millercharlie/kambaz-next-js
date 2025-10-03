@@ -1,5 +1,6 @@
-import { Nav, NavItem, NavLink } from 'react-bootstrap';
 import Link from 'next/link';
+import { Nav, NavItem, NavLink } from 'react-bootstrap';
+
 export default function TOC() {
   return (
     <Nav variant='pills'>
@@ -30,6 +31,14 @@ export default function TOC() {
       </NavItem>
       <NavItem>
         <NavLink href='https://github.com/jannunzi'>My GitHub</NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink
+          id='wd-github'
+          href='https://github.com/millercharlie/kambaz-next-js'
+        >
+          Kambaz
+        </NavLink>
       </NavItem>
     </Nav>
   );
