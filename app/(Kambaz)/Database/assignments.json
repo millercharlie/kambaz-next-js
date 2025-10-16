@@ -1,0 +1,83 @@
+[
+  {
+    "_id": "A101",
+    "title": "Propulsion Assignment",
+    "course": "RS101",
+    "description": "assignment for propulsion",
+    "points": 100,
+    "dueDate": "2003-10-16",
+    "availableFrom": "2003-10-12"
+  },
+  {
+    "_id": "A102",
+    "title": "Combustion Analysis",
+    "course": "RS101",
+    "description": "assignment for combustion analysis",
+    "points": 100,
+    "dueDate": "2003-10-20",
+    "availableFrom": "2003-10-16"
+  },
+  {
+    "_id": "A103",
+    "title": "Nozzle Design Project",
+    "course": "RS101",
+    "description": "assignment for nozzle design",
+    "points": 100,
+    "dueDate": "2003-10-24",
+    "availableFrom": "2003-10-20"
+  },
+  {
+    "_id": "A201",
+    "title": "Aerodynamics Quiz",
+    "course": "RS102",
+    "description": "assignment for aerodynamics",
+    "points": 100,
+    "dueDate": "2003-10-28",
+    "availableFrom": "2003-10-24"
+  },
+  {
+    "_id": "A202",
+    "title": "Flow Analysis",
+    "course": "RS102",
+    "description": "assignment for flow analysis",
+    "points": 100,
+    "dueDate": "2003-11-01",
+    "availableFrom": "2003-10-28"
+  },
+  {
+    "_id": "A203",
+    "title": "Heating Analysis",
+    "course": "RS102",
+    "description": "assignment for heating analysis",
+    "points": 100,
+    "dueDate": "2003-11-05",
+    "availableFrom": "2003-11-01"
+  },
+  {
+    "_id": "A301",
+    "title": "Structural Design Task",
+    "course": "RS103",
+    "description": "assignment for structural design task",
+    "points": 100,
+    "dueDate": "2003-11-09",
+    "availableFrom": "2003-11-05"
+  },
+  {
+    "_id": "A302",
+    "title": "Orbital Calculations",
+    "course": "RS103",
+    "description": "assignment for orbital calculations",
+    "points": 100,
+    "dueDate": "2003-11-14",
+    "availableFrom": "2003-11-09"
+  },
+  {
+    "_id": "A303",
+    "title": "Systems Engineering Exam",
+    "course": "RS103",
+    "description": "assignment for systems engineering",
+    "points": 100,
+    "dueDate": "2003-11-18",
+    "availableFrom": "2003-11-14"
+  }
+]

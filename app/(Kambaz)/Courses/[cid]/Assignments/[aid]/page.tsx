@@ -1,3 +1,7 @@
+'use client';
+
+import { assignments } from '@/app/(Kambaz)/Database';
+import { useParams } from 'next/navigation';
 import {
   Badge,
   Button,
@@ -11,24 +15,30 @@ import {
 } from 'react-bootstrap';
 
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = assignments.find((a) => a._id === aid);
   return (
     <div id='wd-assignments-editor'>
       <Form>
         <div>
           <FormLabel htmlFor='wd-name'>Assignment Name</FormLabel>
-          <FormControl id='wd-name' className='mb-4' defaultValue='A1' />
+          <FormControl
+            id='wd-name'
+            className='mb-4'
+            defaultValue={assignment?.title}
+          />
         </div>
         <FormControl
           as='textarea'
           id='wd-description'
-          defaultValue='The assignment is available online. Submit a link to the landing page of your work.'
+          defaultValue={assignment?.description}
         />
         <div className='w-75 mb-4 float-end text-nowrap'>
           <div className='d-flex gap-2 my-4 align-items-center'>
             <FormLabel htmlFor='wd-points' className='mb-0'>
               Points
             </FormLabel>
-            <FormControl id='wd-points' defaultValue={100} />
+            <FormControl id='wd-points' defaultValue={assignment?.points} />
           </div>
           <div className='d-flex gap-2 my-4 align-items-center'>
             <FormLabel htmlFor='wd-group' className='mb-0'>
@@ -117,7 +127,7 @@ export default function AssignmentEditor() {
                 <FormControl
                   id='wd-due-date'
                   type='date'
-                  defaultValue='2003-10-16'
+                  defaultValue={assignment?.dueDate}
                 />
               </div>
               <div className='mb-4'>
@@ -129,7 +139,7 @@ export default function AssignmentEditor() {
                     <FormControl
                       id='wd-available-from'
                       type='date'
-                      defaultValue='2007-07-17'
+                      defaultValue={assignment?.availableFrom}
                     />
                   </Col>
                   <Col>
@@ -148,10 +158,19 @@ export default function AssignmentEditor() {
           </div>
           <hr />
           <div className='float-end d-flex gap-2'>
-            <Button size='lg' variant='secondary'>
+            <Button
+              size='lg'
+              variant='secondary'
+              href={`/Courses/${cid}/Assignments`}
+            >
               Cancel
             </Button>
-            <Button size='lg' variant='danger' type='submit'>
+            <Button
+              size='lg'
+              variant='danger'
+              type='submit'
+              href={`/Courses/${cid}/Assignments`}
+            >
               Save
             </Button>
           </div>

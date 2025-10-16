@@ -1,5 +1,9 @@
+'use client';
+
+import { assignments } from '../../../Database';
 import LessonControlButtons from '@/app/(Kambaz)/Courses/[cid]/Modules/LessonControlButtons';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import {
   Button,
   FormControl,
@@ -36,6 +40,7 @@ const AssignmentControlButtons = () => (
 );
 
 const Assignments = () => {
+  const { cid } = useParams();
   return (
     <div id='wd-assignments'>
       <div className='d-flex gap-4 mb-lg-5'>
@@ -80,80 +85,36 @@ const Assignments = () => {
               ASSIGNMENTS
               <AssignmentControlButtons />
             </div>
-            <ListGroup
-              className='wd-lessons rounded-0'
-              id='wd-assignments-list'
-            >
-              <ListGroupItem
-                className='wd-lesson p-3 ps-1 d-flex justify-content-between align-items-center'
-                id='wd-assignment-list-item'
+            {assignments.map((assignment) => (
+              <ListGroup
+                className='wd-lessons rounded-0'
+                id='wd-assignments-list'
               >
-                <div className='d-flex align-items-center gap-2'>
-                  <BsGripVertical className='me-2 fs-3' />
-                  <LuClipboardPen className='text-success me-2 fs-3' />
-                  <div>
-                    <Link
-                      href='/Courses/1234/Assignments/123'
-                      className='wd-assignment-link text-decoration-none text-black'
-                    >
-                      A1
-                    </Link>
-                    <p style={{ fontSize: 15 }} className='text-secondary'>
-                      <span className='text-danger'>Multiple Modules</span> |{' '}
-                      <b>Not available until</b> May 6 at 12:00am |<br />
-                      <b>Due</b> May 13 at 11:59pm | 100 pts
-                    </p>
+                <ListGroupItem
+                  className='wd-lesson p-3 ps-1 d-flex justify-content-between align-items-center'
+                  id='wd-assignment-list-item'
+                >
+                  <div className='d-flex align-items-center gap-2'>
+                    <BsGripVertical className='me-2 fs-3' />
+                    <LuClipboardPen className='text-success me-2 fs-3' />
+                    <div>
+                      <Link
+                        href={`/Courses/${cid}/Assignments/${assignment._id}`}
+                        className='wd-assignment-link text-decoration-none text-black'
+                      >
+                        {assignment.title}
+                      </Link>
+                      <p style={{ fontSize: 15 }} className='text-secondary'>
+                        <span className='text-danger'>Multiple Modules</span> |{' '}
+                        <b>Not available until</b> May 6 at 12:00am |<br />
+                        <b>Due</b> May 13 at 11:59pm | 100 pts
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <LessonControlButtons />
-              </ListGroupItem>
-              <ListGroupItem
-                className='wd-lesson p-3 ps-1 d-flex justify-content-between align-items-center'
-                id='wd-assignment-list-item'
-              >
-                <div className='d-flex align-items-center gap-2'>
-                  <BsGripVertical className='me-2 fs-3' />
-                  <LuClipboardPen className='text-success me-2 fs-3' />
-                  <div>
-                    <Link
-                      href='/Courses/1234/Assignments/123'
-                      className='wd-assignment-link text-decoration-none text-black'
-                    >
-                      A2
-                    </Link>
-                    <p style={{ fontSize: 15 }} className='text-secondary'>
-                      <span className='text-danger'>Multiple Modules</span> |{' '}
-                      <b>Not available until</b> May 13 at 12:00am |<br />
-                      <b>Due</b> May 20 at 11:59pm | 100 pts
-                    </p>
-                  </div>
-                </div>
-                <LessonControlButtons />
-              </ListGroupItem>
-              <ListGroupItem
-                className='wd-lesson p-3 ps-1 d-flex justify-content-between align-items-center'
-                id='wd-assignment-list-item'
-              >
-                <div className='d-flex align-items-center gap-2'>
-                  <BsGripVertical className='me-2 fs-3' />
-                  <LuClipboardPen className='text-success me-2 fs-3' />
-                  <div>
-                    <Link
-                      href='/Courses/1234/Assignments/123'
-                      className='wd-assignment-link text-decoration-none text-black'
-                    >
-                      A3
-                    </Link>
-                    <p style={{ fontSize: 15 }} className='text-secondary'>
-                      <span className='text-danger'>Multiple Modules</span> |{' '}
-                      <b>Not available until</b> May 20 at 12:00am |<br />
-                      <b>Due</b> May 27 at 11:59pm | 100 pts
-                    </p>
-                  </div>
-                </div>
-                <LessonControlButtons />
-              </ListGroupItem>
-            </ListGroup>
+                  <LessonControlButtons />
+                </ListGroupItem>
+              </ListGroup>
+            ))}
           </ListGroupItem>
         </ListGroup>
       </div>
