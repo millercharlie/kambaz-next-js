@@ -1,5 +1,5 @@
 export default function VariablesAndConstants() {
-  let functionScoped = 2; // var was causing the deployment to fail
+  const functionScoped = 2; // var was causing the deployment to fail
   let blockScoped = 5;
   blockScoped = 6;
   const constant1 = functionScoped - blockScoped;
