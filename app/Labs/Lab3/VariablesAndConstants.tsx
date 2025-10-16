@@ -1,6 +1,7 @@
 export default function VariablesAndConstants() {
-  var functionScoped = 2;
+  let functionScoped = 2; // var was causing the deployment to fail
   let blockScoped = 5;
+  blockScoped = 6;
   const constant1 = functionScoped - blockScoped;
   return (
     <div id='wd-variables-and-constants'>

@@ -85,10 +85,11 @@ const Assignments = () => {
               ASSIGNMENTS
               <AssignmentControlButtons />
             </div>
-            {assignments.map((assignment) => (
+            {assignments.map((assignment, index) => (
               <ListGroup
                 className='wd-lessons rounded-0'
                 id='wd-assignments-list'
+                key={index}
               >
                 <ListGroupItem
                   className='wd-lesson p-3 ps-1 d-flex justify-content-between align-items-center'
