@@ -6,6 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function TodoForm() {
   const { todo } = useSelector((state: any) => state.todosReducer);
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    console.log(todo);
+  }, [todo]);
+
   return (
     <ListGroupItem>
       <Button onClick={() => dispatch(addTodo(todo))} id='wd-add-todo-click'>
@@ -19,6 +24,7 @@ export default function TodoForm() {
       </Button>
       <FormControl
         defaultValue={todo.title}
+        value={todo.title}
         onChange={(e) => dispatch(setTodo({ ...todo, title: e.target.value }))}
       />
     </ListGroupItem>

@@ -1,3 +1,5 @@
+'use client';
+
 import TOC from './TOC';
 import store from '@/app/Labs/store';
 import { ReactNode } from 'react';
