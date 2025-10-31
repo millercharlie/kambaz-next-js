@@ -52,10 +52,6 @@ export default function Dashboard() {
     [courses, enrollments]
   );
 
-  React.useEffect(() => {
-    console.log(enrollments);
-  }, [enrollments]);
-
   const isEnrolled = React.useCallback(
     (curCourse: any) =>
       filteredCourses ? filteredCourses.includes(curCourse) : false,
