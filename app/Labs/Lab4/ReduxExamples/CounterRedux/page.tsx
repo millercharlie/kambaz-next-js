@@ -1,3 +1,5 @@
+'use client';
+
 import { decrement, increment } from './counterReducer';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
