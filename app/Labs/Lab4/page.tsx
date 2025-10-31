@@ -13,7 +13,6 @@ import PassingDataOnEvent from '@/app/Labs/Lab4/PassingDataOnEvent';
 import PassingFunctions from '@/app/Labs/Lab4/PassingFunctions';
 import ReduxExamples from '@/app/Labs/Lab4/ReduxExamples/page';
 import StringStateVariables from '@/app/Labs/Lab4/StringStateVariables';
-import { Provider } from 'react-redux';
 
 const Lab4 = () => {
   function sayHello() {
@@ -21,23 +20,21 @@ const Lab4 = () => {
   }
 
   return (
-    <Provider store={store}>
-      <div id='wd-lab4'>
-        <h2>Lab 4</h2>
-        <ClickEvent />
-        <PassingDataOnEvent />
-        <PassingFunctions theFunction={sayHello} />
-        <EventObject />
-        <Counter />
-        <BooleanStateVariables />
-        <StringStateVariables />
-        <DateStateVariable />
-        <ObjectStateVariable />
-        <ArrayStateVariable />
-        <ParentStateComponent />
-        <ReduxExamples />
-      </div>
-    </Provider>
+    <div id='wd-lab4'>
+      <h2>Lab 4</h2>
+      <ClickEvent />
+      <PassingDataOnEvent />
+      <PassingFunctions theFunction={sayHello} />
+      <EventObject />
+      <Counter />
+      <BooleanStateVariables />
+      <StringStateVariables />
+      <DateStateVariable />
+      <ObjectStateVariable />
+      <ArrayStateVariable />
+      <ParentStateComponent />
+      <ReduxExamples />
+    </div>
   );
 };
 
