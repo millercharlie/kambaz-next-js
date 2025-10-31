@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
+import React from 'react';
 
-export default function CourseNavigation() {
+export default function CourseNavigation({ open }: { open: boolean }) {
   const params = useParams();
   const pathname = usePathname();
   const links = [
@@ -17,7 +18,11 @@ export default function CourseNavigation() {
     'People',
   ];
   return (
-    <div id='wd-courses-navigation' className='wd list-group fs-5 rounded-0'>
+    <div
+      id='wd-courses-navigation'
+      className='wd list-group fs-5 rounded-0'
+      style={{ display: open ? 'block' : 'none' }}
+    >
       {links.map((link, index) => (
         <Link
           href={`/Courses/${params.cid}/${link}`}

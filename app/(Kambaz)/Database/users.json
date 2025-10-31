@@ -124,5 +124,19 @@
     "section": "S101",
     "lastActivity": "1852-11-27",
     "totalActivity": "21:32:43"
+  },
+  {
+    "_id": "101603",
+    "username": "charlie",
+    "password": "123",
+    "firstName": "Charlie",
+    "lastName": "Miller",
+    "email": "charlie@one.com",
+    "dob": "2003-10-16",
+    "role": "ADMIN",
+    "loginId": "002991652",
+    "section": "S101",
+    "lastActivity": "2007-17-07",
+    "totalActivity": "211:32:43"
   }
 ]

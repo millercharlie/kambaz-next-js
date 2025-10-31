@@ -1,7 +1,11 @@
 'use client';
 
-import { assignments } from '@/app/(Kambaz)/Database';
-import { useParams } from 'next/navigation';
+import {
+  addAssignment,
+  updateAssignment,
+} from '@/app/(Kambaz)/Courses/[cid]/Assignments/reducer';
+import { redirect, useParams } from 'next/navigation';
+import React from 'react';
 import {
   Badge,
   Button,
@@ -13,10 +17,28 @@ import {
   FormSelect,
   Row,
 } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
-  const assignment = assignments.find((a) => a._id === aid);
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+
+  const editing = React.useMemo(
+    () => assignments.find((a: any) => a._id === aid),
+    []
+  );
+
+  const [assignment, setAssignment] = React.useState<any>(
+    assignments.find((a: any) => a._id === aid) || { course: cid }
+  );
+
+  const modifyAssignment = (event: any, field: string) => {
+    if (field === 'points') {
+      setAssignment({ ...assignment, points: parseInt(event.target.value) });
+    } else setAssignment({ ...assignment, [field]: event.target.value });
+  };
+
+  const dispatch = useDispatch();
   return (
     <div id='wd-assignments-editor'>
       <Form>
@@ -26,19 +48,25 @@ export default function AssignmentEditor() {
             id='wd-name'
             className='mb-4'
             defaultValue={assignment?.title}
+            onChange={(event) => modifyAssignment(event, 'title')}
           />
         </div>
         <FormControl
           as='textarea'
           id='wd-description'
           defaultValue={assignment?.description}
+          onChange={(event) => modifyAssignment(event, 'description')}
         />
         <div className='w-75 mb-4 float-end text-nowrap'>
           <div className='d-flex gap-2 my-4 align-items-center'>
             <FormLabel htmlFor='wd-points' className='mb-0'>
               Points
             </FormLabel>
-            <FormControl id='wd-points' defaultValue={assignment?.points} />
+            <FormControl
+              id='wd-points'
+              defaultValue={assignment?.points}
+              onChange={(event) => modifyAssignment(event, 'points')}
+            />
           </div>
           <div className='d-flex gap-2 my-4 align-items-center'>
             <FormLabel htmlFor='wd-group' className='mb-0'>
@@ -128,6 +156,7 @@ export default function AssignmentEditor() {
                   id='wd-due-date'
                   type='date'
                   defaultValue={assignment?.dueDate}
+                  onChange={(event) => modifyAssignment(event, 'dueDate')}
                 />
               </div>
               <div className='mb-4'>
@@ -140,6 +169,9 @@ export default function AssignmentEditor() {
                       id='wd-available-from'
                       type='date'
                       defaultValue={assignment?.availableFrom}
+                      onChange={(event) =>
+                        modifyAssignment(event, 'availableFrom')
+                      }
                     />
                   </Col>
                   <Col>
@@ -150,6 +182,9 @@ export default function AssignmentEditor() {
                       id='wd-available-until'
                       type='date'
                       defaultValue='2019-06-08'
+                      onChange={(event) =>
+                        modifyAssignment(event, 'availableUntil')
+                      }
                     />
                   </Col>
                 </Row>
@@ -161,7 +196,7 @@ export default function AssignmentEditor() {
             <Button
               size='lg'
               variant='secondary'
-              href={`/Courses/${cid}/Assignments`}
+              onClick={() => redirect(`/Courses/${cid}/Assignments`)}
             >
               Cancel
             </Button>
@@ -169,7 +204,15 @@ export default function AssignmentEditor() {
               size='lg'
               variant='danger'
               type='submit'
-              href={`/Courses/${cid}/Assignments`}
+              onClick={(event) => {
+                event.preventDefault();
+                dispatch(
+                  editing
+                    ? updateAssignment(assignment)
+                    : addAssignment(assignment)
+                );
+                redirect(`/Courses/${cid}/Assignments`);
+              }}
             >
               Save
             </Button>

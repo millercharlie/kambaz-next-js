@@ -1,9 +1,10 @@
 'use client';
 
-import { assignments } from '../../../Database';
-import LessonControlButtons from '@/app/(Kambaz)/Courses/[cid]/Modules/LessonControlButtons';
+import LessonControlButtons from '@/app/(Kambaz)/Courses/[cid]/Assignments/LessonControlButtons';
+import { deleteAssignment } from '@/app/(Kambaz)/Courses/[cid]/Assignments/reducer';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { redirect, useParams } from 'next/navigation';
+import React from 'react';
 import {
   Button,
   FormControl,
@@ -18,6 +19,7 @@ import { BsGripVertical } from 'react-icons/bs';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { IoEllipsisVertical } from 'react-icons/io5';
 import { LuClipboardPen } from 'react-icons/lu';
+import { useDispatch, useSelector } from 'react-redux';
 
 const AssignmentControlButtons = () => (
   <div
@@ -41,6 +43,9 @@ const AssignmentControlButtons = () => (
 
 const Assignments = () => {
   const { cid } = useParams();
+  const dispatch = useDispatch();
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+
   return (
     <div id='wd-assignments'>
       <div className='d-flex gap-4 mb-lg-5'>
@@ -68,6 +73,9 @@ const Assignments = () => {
             className='d-flex justify-content-center align-items-center'
             id='wd-add-assignment'
             variant='danger'
+            onClick={() =>
+              redirect(`/Courses/${cid}/Assignments/draft/AssignmentsEditor`)
+            }
           >
             <BiPlus />
             Assignment
@@ -85,7 +93,7 @@ const Assignments = () => {
               ASSIGNMENTS
               <AssignmentControlButtons />
             </div>
-            {assignments.map((assignment, index) => (
+            {assignments.map((assignment: any, index: number) => (
               <ListGroup
                 className='wd-lessons rounded-0'
                 id='wd-assignments-list'
@@ -107,12 +115,23 @@ const Assignments = () => {
                       </Link>
                       <p style={{ fontSize: 15 }} className='text-secondary'>
                         <span className='text-danger'>Multiple Modules</span> |{' '}
-                        <b>Not available until</b> May 6 at 12:00am |<br />
-                        <b>Due</b> May 13 at 11:59pm | 100 pts
+                        <b>Not available until</b>
+                        {' ' +
+                          new Date(
+                            assignment.availableFrom
+                          ).toDateString()}{' '}
+                        |<br />
+                        <b>Due</b> {new Date(assignment.dueDate).toDateString()}{' '}
+                        | {assignment.points} pts
                       </p>
                     </div>
                   </div>
-                  <LessonControlButtons />
+                  <LessonControlButtons
+                    assignmentId={assignment._id}
+                    deleteAssignment={(assignmentId) =>
+                      dispatch(deleteAssignment(assignmentId))
+                    }
+                  />
                 </ListGroupItem>
               </ListGroup>
             ))}
