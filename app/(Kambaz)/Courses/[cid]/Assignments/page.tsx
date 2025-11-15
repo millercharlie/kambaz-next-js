@@ -1,7 +1,12 @@
 'use client';
 
+import * as client from '../../client';
 import LessonControlButtons from '@/app/(Kambaz)/Courses/[cid]/Assignments/LessonControlButtons';
-import { deleteAssignment } from '@/app/(Kambaz)/Courses/[cid]/Assignments/reducer';
+import {
+  deleteAssignment,
+  setAssignments,
+} from '@/app/(Kambaz)/Courses/[cid]/Assignments/reducer';
+import { setModules } from '@/app/(Kambaz)/Courses/[cid]/Modules/reducer';
 import Link from 'next/link';
 import { redirect, useParams } from 'next/navigation';
 import React from 'react';
@@ -45,6 +50,21 @@ const Assignments = () => {
   const { cid } = useParams();
   const dispatch = useDispatch();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+
+  const fetchAssignments = async (cid: string) => {
+    const assignments = await client.fetchAssignments(cid);
+    dispatch(setAssignments(assignments));
+  };
+  const onRemoveAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(assignmentId);
+    dispatch(
+      setAssignments(assignments.filter((m: any) => m._id !== assignmentId))
+    );
+  };
+
+  React.useEffect(() => {
+    fetchAssignments(cid as string);
+  }, []);
 
   return (
     <div id='wd-assignments'>
@@ -129,7 +149,7 @@ const Assignments = () => {
                   <LessonControlButtons
                     assignmentId={assignment._id}
                     deleteAssignment={(assignmentId) =>
-                      dispatch(deleteAssignment(assignmentId))
+                      onRemoveAssignment(assignmentId)
                     }
                   />
                 </ListGroupItem>

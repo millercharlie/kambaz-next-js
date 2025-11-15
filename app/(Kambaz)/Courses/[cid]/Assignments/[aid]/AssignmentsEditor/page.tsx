@@ -2,8 +2,11 @@
 
 import {
   addAssignment,
+  setAssignments,
   updateAssignment,
 } from '@/app/(Kambaz)/Courses/[cid]/Assignments/reducer';
+import { setModules } from '@/app/(Kambaz)/Courses/[cid]/Modules/reducer';
+import * as client from '@/app/(Kambaz)/Courses/client';
 import { redirect, useParams } from 'next/navigation';
 import React from 'react';
 import {
@@ -32,6 +35,21 @@ export default function AssignmentEditor() {
     assignments.find((a: any) => a._id === aid) || { course: cid }
   );
 
+  const onAddAssignment = async (assignment: any) => {
+    if (!cid) return;
+    const newAssignment = await client.createAssignmentForCourse(
+      cid as string,
+      assignment
+    );
+    dispatch(setAssignments([...assignments, newAssignment]));
+  };
+  const onUpdateAssignment = async (assignment: any) => {
+    await client.updateAssignment(assignment);
+    const newAssignment = assignments.map((a: any) =>
+      a._id === assignment._id ? assignment : a
+    );
+    dispatch(updateAssignment(newAssignment));
+  };
   const modifyAssignment = (event: any, field: string) => {
     if (field === 'points') {
       setAssignment({ ...assignment, points: parseInt(event.target.value) });
@@ -206,11 +224,9 @@ export default function AssignmentEditor() {
               type='submit'
               onClick={(event) => {
                 event.preventDefault();
-                dispatch(
-                  editing
-                    ? updateAssignment(assignment)
-                    : addAssignment(assignment)
-                );
+                editing
+                  ? onUpdateAssignment(assignment)
+                  : onAddAssignment(assignment);
                 redirect(`/Courses/${cid}/Assignments`);
               }}
             >

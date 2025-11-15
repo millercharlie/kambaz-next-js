@@ -28,6 +28,11 @@ export default function Labs() {
             Lab 4: State Management
           </Link>
         </li>
+        <li>
+          <Link href='/Labs/Lab5' id='wd-lab4-link'>
+            Lab 5: RESTful APIs
+          </Link>
+        </li>
       </ul>
     </div>
   );
