@@ -1,6 +1,5 @@
 'use client';
 
-import * as db from '../../Database';
 import * as client from '../client';
 import { setCurrentUser } from '../reducer';
 import { redirect } from 'next/dist/client/components/navigation';
@@ -41,12 +40,10 @@ export default function Signin() {
         id='wd-password'
       />
       <Button onClick={signin} id='wd-signin-btn' className='w-100'>
-        {' '}
-        Sign in{' '}
+        Sign in
       </Button>
       <Link id='wd-signup-link' href='/Kambaz/Account/Signup'>
-        {' '}
-        Sign up{' '}
+        Sign up
       </Link>
     </div>
   );
