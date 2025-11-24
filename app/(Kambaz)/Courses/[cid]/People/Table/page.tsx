@@ -1,8 +1,7 @@
 'use client';
 
 import PeopleDetails from '@/app/(Kambaz)/Courses/[cid]/People/Details';
-import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 import { Table } from 'react-bootstrap';
 import { FaUserCircle } from 'react-icons/fa';
 

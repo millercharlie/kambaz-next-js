@@ -1,14 +1,8 @@
 'use client';
 
 import * as client from '../Courses/client';
-import { fetchEnrollments } from '../Courses/client';
-import { setModules } from '@/app/(Kambaz)/Courses/[cid]/Modules/reducer';
 import { setCourses, updateCourse } from '@/app/(Kambaz)/Courses/reducer';
-import {
-  enrollUser,
-  setEnrollments,
-  unenrollUser,
-} from '@/app/(Kambaz)/Dashboard/reducer';
+import { setEnrollments } from '@/app/(Kambaz)/Dashboard/reducer';
 import Link from 'next/link';
 import React from 'react';
 import {
@@ -27,6 +21,8 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function Dashboard() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { enrollments } = useSelector((state: any) => state.enrollmentsReducer);
+  const { courses } = useSelector((state: any) => state.coursesReducer);
+  const dispatch = useDispatch();
 
   const [course, setCourse] = React.useState<any>({
     _id: '0',
@@ -38,14 +34,6 @@ export default function Dashboard() {
     description: 'New Description',
   });
 
-  const fetchCourses = async () => {
-    try {
-      const courses = await client.findMyCourses();
-      dispatch(setCourses(courses));
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const onAddNewCourse = async () => {
     const newCourse = await client.createCourse(course);
     dispatch(setCourses([...courses, newCourse]));
@@ -69,71 +57,62 @@ export default function Dashboard() {
     );
   };
 
-  const fetchEnrollments = async () => {
-    const enrollments = await client.fetchEnrollments(currentUser._id);
+  const fetchAllCourses = async () => {
+    const allCourses = await client.fetchAllCourses();
+    dispatch(setCourses(allCourses));
+  };
+
+  const fetchCoursesForUser = async () => {
+    const enrollments = await client.fetchCoursesForUser(currentUser._id);
+    setDisplayedCourses(enrollments);
     dispatch(setEnrollments(enrollments));
   };
   const onEnrollUser = async (course) => {
-    await client.enrollUserInCourse(currentUser._id, course._id);
-    enrollUser({
-      userId: currentUser._id,
-      courseId: course._id,
-    });
+    await client.enrollIntoCourse(currentUser._id, course._id);
+    dispatch(setEnrollments([...enrollments, course]));
   };
   const onUnenrollUser = async (course) => {
-    console.log({ enrollments, user: currentUser._id, course: course._id });
-    await client.unenrollUserFromCourse(
-      enrollments.find(
-        (enrollment) =>
-          enrollment.user === currentUser._id &&
-          enrollment.course === course._id
-      )
-    );
+    await client.unenrollFromCourse(currentUser._id, course._id);
     dispatch(
-      unenrollUser({
-        userId: currentUser._id,
-        courseId: course._id,
-      })
+      setEnrollments(enrollments.filter((e: any) => e._id !== course._id))
     );
   };
 
   React.useEffect(() => {
-    fetchEnrollments();
-  }, []);
-
-  const { courses } = useSelector((state: any) => state.coursesReducer);
-  const dispatch = useDispatch();
-
-  const isEnrolled = React.useCallback(
-    (curCourse: any) => (courses ? courses.includes(curCourse) : false),
-    [courses, enrollments]
-  );
-
-  // TODO: Likely remove this useEffect() -> this was mostly for the "Enrollments" button
+    setDisplayedCourses(enrollments);
+  }, [enrollments]);
   React.useEffect(() => {
     setDisplayedCourses(courses);
   }, [courses]);
 
-  const [displayedCourses, setDisplayedCourses] = React.useState(courses);
-
   React.useEffect(() => {
-    fetchCourses();
-  }, [currentUser]);
+    fetchCoursesForUser();
+    fetchAllCourses();
+  }, []);
+
+  const isEnrolled = React.useCallback(
+    (curCourse: any) =>
+      enrollments
+        ? enrollments.map((e) => e._id).includes(curCourse._id)
+        : false,
+    [courses, enrollments]
+  );
+
+  const [displayedCourses, setDisplayedCourses] = React.useState(enrollments);
+
+  const handleDisplayedCourses = () => {
+    if (displayedCourses.length < courses.length) {
+      setDisplayedCourses(courses);
+    } else {
+      setDisplayedCourses(enrollments);
+    }
+  };
 
   return (
     <div id='wd-dashboard'>
       <div className='d-flex justify-content-between'>
         <h1 id='wd-dashboard-title'>Dashboard</h1>
-        <Button
-          id='wd-enrollments'
-          onClick={() =>
-            setDisplayedCourses(
-              displayedCourses.length !== courses.length
-                ? displayedCourses
-                : courses // TODO: This
-            )
-          }
-        >
+        <Button id='wd-enrollments' onClick={() => handleDisplayedCourses()}>
           Enrollments
         </Button>
       </div>
