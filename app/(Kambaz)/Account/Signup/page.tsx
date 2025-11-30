@@ -5,7 +5,7 @@ import { setCurrentUser } from '../reducer';
 import { redirect } from 'next/dist/client/components/navigation';
 import Link from 'next/link';
 import { useState } from 'react';
-import { Button, FormControl } from 'react-bootstrap';
+import { FormControl } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 
 export default function Signup() {
