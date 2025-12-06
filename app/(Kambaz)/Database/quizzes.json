@@ -1,0 +1,153 @@
+[
+  {
+    "_id": "q1",
+    "title": "Quiz 1 - The Solar System",
+    "description": "",
+    "type": "GRADED_QUIZ",
+    "points": 100,
+    "assignmentGroup": "QUIZZES",
+    "shuffleAnswers": true,
+    "timeLimit": 20,
+    "multipleAttempts": true,
+    "numAttempts": 1,
+    "showCorrect": true,
+    "accessCode": "1234",
+    "oneAtATime": true,
+    "published": true,
+    "webcam": false,
+    "lockQuestions": false,
+    "dueDate": "2025-12-07",
+    "availableFrom": "2025-11-25",
+    "availableUntil": "2025-12-07",
+    "questions": [
+      {
+        "_id": "question_1",
+        "title": "Question 1",
+        "question": "Is Venus a gas giant?",
+        "points": 10,
+        "type": "true_or_false",
+        "choices": [
+          {
+            "answer": true,
+            "correct": false
+          },
+          {
+            "answer": false,
+            "correct": true
+          }
+        ]
+      },
+      {
+        "_id": "question_2",
+        "title": "Question 2",
+        "question": "How many planets are in the Solar System?",
+        "points": 30,
+        "type": "written",
+        "choices": [
+          {
+            "answer": "8",
+            "correct": true
+          },
+          {
+            "answer": "eight",
+            "correct": true
+          }
+        ]
+      },
+      {
+        "_id": "question_3",
+        "title": "Question 3",
+        "question": "How many asteroids larger than 100 kilometers are in the Kuiper Belt?",
+        "points": 40,
+        "type": "multiple_choice",
+        "choices": [
+          {
+            "answer": "Less than 50,000",
+            "correct": false
+          },
+          {
+            "answer": "More than 1,000,000",
+            "correct": false
+          },
+          {
+            "answer": "More than 100,000",
+            "correct": true
+          },
+          {
+            "answer": "Less than 75,000",
+            "correct": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "q2",
+    "title": "Quiz 2 - Jupiter",
+    "description": "",
+    "type": "GRADED_QUIZ",
+    "points": 50,
+    "assignmentGroup": "QUIZZES",
+    "shuffleAnswers": false,
+    "timeLimit": 10,
+    "multipleAttempts": false,
+    "numAttempts": 1,
+    "showCorrect": true,
+    "published": true,
+    "accessCode": "",
+    "oneAtATime": false,
+    "webcam": true,
+    "lockQuestions": false,
+    "dueDate": "2025-12-07",
+    "availableFrom": "2025-11-25",
+    "availableUntil": "2025-12-07",
+    "questions": []
+  },
+  {
+    "_id": "q3",
+    "title": "Quiz 3 - The Sun",
+    "description": "",
+    "type": "GRADED_QUIZ",
+    "points": 50,
+    "assignmentGroup": "QUIZZES",
+    "shuffleAnswers": true,
+    "timeLimit": 20,
+    "multipleAttempts": false,
+    "numAttempts": 1,
+    "showCorrect": false,
+    "accessCode": "sun",
+    "oneAtATime": true,
+    "webcam": false,
+    "lockQuestions": true,
+    "dueDate": "2025-12-07",
+    "availableFrom": "2025-11-25",
+    "availableUntil": "2025-12-07",
+    "questions": [
+      {
+        "_id": "question_1",
+        "title": "Question 1",
+        "question": "How large is the sun?",
+        "points": 20,
+        "type": "multiple_choice",
+        "choices": [
+          {
+            "answer": "864,000 miles",
+            "correct": true
+          },
+          {
+            "answer": "1,020,000 miles",
+            "correct": false
+          },
+          {
+            "answer": "200,000.375 miles",
+            "correct": false
+          },
+          {
+            "answer": "468,000 miles",
+            "correct": false
+          }
+        ]
+      }
+    ]
+  }
+]

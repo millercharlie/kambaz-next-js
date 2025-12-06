@@ -1,0 +1,61 @@
+[
+  {
+    "_id": "question_1",
+    "title": "Question 1",
+    "question": "How many moons orbit Jupiter?",
+    "points": 20,
+    "type": "MULTIPLE_CHOICE",
+    "choices": [
+      {
+        "answer": "1",
+        "correct": false
+      },
+      {
+        "answer": "95",
+        "correct": true
+      },
+      {
+        "answer": "62",
+        "correct": false
+      },
+      {
+        "answer": "23",
+        "correct": false
+      }
+    ]
+  },
+  {
+    "_id": "question_2",
+    "title": "Question 2",
+    "question": "Is Venus a gas giant?",
+    "points": 10,
+    "type": "BOOLEAN",
+    "choices": [
+      {
+        "answer": true,
+        "correct": false
+      },
+      {
+        "answer": false,
+        "correct": true
+      }
+    ]
+  },
+  {
+    "_id": "question_3",
+    "title": "Question 3",
+    "question": "How many planets are in the Solar System?",
+    "points": 30,
+    "type": "WRITTEN",
+    "choices": [
+      {
+        "answer": "8",
+        "correct": true
+      },
+      {
+        "answer": "eight",
+        "correct": true
+      }
+    ]
+  }
+]

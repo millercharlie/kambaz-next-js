@@ -162,7 +162,7 @@ export default function Dashboard() {
                   className='wd-dashboard-course-link text-decoration-none text-dark'
                 >
                   <CardImg
-                    src={`/images/${course.image}` || '/images/reactjs.jpg'}
+                    src={`${course.image}` || 'reactjs.jpg'}
                     variant='top'
                     width='100%'
                     height={160}
