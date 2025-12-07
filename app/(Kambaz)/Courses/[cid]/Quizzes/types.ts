@@ -88,6 +88,7 @@ export const draftQuiz: Quiz = {
   availableUntil: new Date('2003-10-20'),
   dueDate: new Date('2003-10-20'),
   numAttempts: 1,
+  timeLimit: 20,
   oneAtATime: true,
   points: 100,
   published: false,

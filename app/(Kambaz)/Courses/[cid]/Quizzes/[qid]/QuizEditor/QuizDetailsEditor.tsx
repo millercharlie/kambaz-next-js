@@ -270,7 +270,11 @@ const QuizDetailsEditor: React.FC<{
                 editing
                   ? onUpdateQuiz({ ...quiz, published: false })
                   : onAddQuiz({ ...quiz, published: false });
-                redirect(`/Courses/${cid}/Quizzes/${qid}/QuizDetails`);
+                redirect(
+                  qid === draftQuiz._id
+                    ? `/Courses/${cid}/Quizzes`
+                    : `/Courses/${cid}/Quizzes/${qid}/QuizDetails`
+                );
               }}
             >
               Save

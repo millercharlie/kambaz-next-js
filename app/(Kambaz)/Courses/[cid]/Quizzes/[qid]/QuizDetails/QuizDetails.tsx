@@ -1,17 +1,35 @@
 'use client';
 
+import { updateQuiz } from '@/app/(Kambaz)/Courses/[cid]/Quizzes/reducer';
 import { Quiz } from '@/app/(Kambaz)/Courses/[cid]/Quizzes/types';
+import * as client from '@/app/(Kambaz)/Courses/client';
 import { redirect, useParams } from 'next/navigation';
 import React from 'react';
 import { Button, Table } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 
-const QuizDetails: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
+const QuizDetails: React.FC<{ quiz: Quiz; quizzes: Quiz[] }> = ({
+  quiz,
+  quizzes,
+}) => {
   const { cid, qid } = useParams();
+  const dispatch = useDispatch();
 
   const booleanText = React.useCallback(
     (param: boolean) => (param ? 'Yes' : 'No'),
     []
   );
+
+  const onPublishQuiz = async () => {
+    await client.updateQuiz({
+      ...quiz,
+      published: !quiz.published,
+    });
+    const newQuizzes = quizzes.map((q: Quiz) =>
+      q._id === quiz._id ? quiz : q
+    );
+    dispatch(updateQuiz(newQuizzes));
+  };
 
   return (
     <div id='wd-quiz-editor'>
@@ -23,7 +41,6 @@ const QuizDetails: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
             redirect(`/Courses/${cid}/Quizzes/${qid}/QuizPreview`);
           }}
         >
-          {/* TODO: For students, this will just be a "Start" button and not a Preview/Edit Button */}
           Preview
         </Button>
         <Button
@@ -37,7 +54,7 @@ const QuizDetails: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
         </Button>
         <Button
           variant={quiz.published ? 'danger' : 'success'}
-          onClick={() => {}} // TODO: This will publish/unpublish a quiz
+          onClick={() => onPublishQuiz()} // TODO: This will publish/unpublish a quiz
         >
           {quiz.published ? 'Unpublish' : 'Publish'}
         </Button>

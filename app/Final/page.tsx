@@ -17,8 +17,9 @@ const FinalProjectPage = () => (
       </li>
     </ul>
     <hr />
-    <h5>Landing Page</h5>
-    <a></a>
+    <a href='https://kambaz-next-js-3ioc.vercel.app'>
+      <h5>Landing Page</h5>
+    </a>
   </div>
 );
 export default FinalProjectPage;
