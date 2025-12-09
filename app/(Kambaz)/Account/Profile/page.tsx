@@ -68,7 +68,7 @@ export default function Profile() {
             id='wd-dob'
             className='mb-2'
             type='date'
-            defaultValue={profile.dob}
+            defaultValue={profile.dob ? profile.dob.split('T')[0] : profile.dob}
             onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
           />
           <FormControl

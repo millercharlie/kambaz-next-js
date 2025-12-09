@@ -34,15 +34,17 @@ const QuizDetails: React.FC<{ quiz: Quiz; quizzes: Quiz[] }> = ({
   return (
     <div id='wd-quiz-editor'>
       <div className='btn d-flex align-items-center'>
-        <Button
-          variant='secondary'
-          className='me-2'
-          onClick={() => {
-            redirect(`/Courses/${cid}/Quizzes/${qid}/QuizPreview`);
-          }}
-        >
-          Preview
-        </Button>
+        {quiz.questions && quiz.questions.length > 0 && (
+          <Button
+            variant='secondary'
+            className='me-2'
+            onClick={() => {
+              redirect(`/Courses/${cid}/Quizzes/${qid}/QuizPreview`);
+            }}
+          >
+            Preview
+          </Button>
+        )}
         <Button
           variant='secondary'
           className='me-2'
@@ -54,7 +56,7 @@ const QuizDetails: React.FC<{ quiz: Quiz; quizzes: Quiz[] }> = ({
         </Button>
         <Button
           variant={quiz.published ? 'danger' : 'success'}
-          onClick={() => onPublishQuiz()} // TODO: This will publish/unpublish a quiz
+          onClick={() => onPublishQuiz()}
         >
           {quiz.published ? 'Unpublish' : 'Publish'}
         </Button>

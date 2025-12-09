@@ -19,7 +19,6 @@ import { Button, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
 const QuizPreview: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
-  const { cid } = useParams();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const dispatch = useDispatch();
 
@@ -28,10 +27,15 @@ const QuizPreview: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
   >(quiz.oneAtATime ? [quiz.questions[0]] : quiz.questions);
   const [curIndex, setCurIndex] = React.useState<number>(0);
   const [showModal, setShowModal] = React.useState<boolean>(false);
+  const [showStudentModal, setShowStudentModal] =
+    React.useState<boolean>(false);
+  const [finalGrade, setFinalGrade] = React.useState<number>(0);
   const [adminQuiz, setAdminQuiz] = React.useState<TakenQuiz>(null);
   const [chosenAnswers, setChosenAnswers] = React.useState<
     { questionId: string; answerId: string }[]
   >([]);
+
+  const { cid, qid } = useParams();
 
   const updateUserQuizzes = async (newQuiz: TakenQuiz) => {
     const newAttempt: boolean = !currentUser.takenQuizzes.find(
@@ -103,7 +107,9 @@ const QuizPreview: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
         finalGrade: parseInt(((grade / quiz.points) * 100).toFixed(2)),
         quizId: quiz._id,
       };
+      setFinalGrade(parseInt(((grade / quiz.points) * 100).toFixed(2)));
       updateUserQuizzes(finalQuizInfo);
+      setShowStudentModal(true);
     } else {
       setAdminQuiz({
         answers: userAnswers,
@@ -115,6 +121,26 @@ const QuizPreview: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
     }
   };
 
+  const StudentGradeModal = () => (
+    <Modal show={showStudentModal}>
+      <Modal.Header>
+        <b>Congratulations! You completed the quiz.</b>
+        <Button
+          variant='danger'
+          className='float-right'
+          onClick={() => {
+            setShowStudentModal(false);
+            redirect(`/Courses/${cid}/Quizzes/`);
+          }}
+        >
+          Close
+        </Button>
+      </Modal.Header>
+      <Modal.Body>
+        {`Your Score is ${Math.round((finalGrade / 100) * quiz.points)} / ${quiz.points}, or ${finalGrade}%`}
+      </Modal.Body>
+    </Modal>
+  );
   const FinalGradeModal = () => (
     <Modal show={showModal}>
       <Modal.Header>
@@ -128,7 +154,13 @@ const QuizPreview: React.FC<{ quiz: Quiz }> = ({ quiz }) => {
 
   return (
     <div id='wd-quiz-questions-editor'>
+      <StudentGradeModal />
       <FinalGradeModal />
+      <div>
+        <h5>{quiz.title}</h5>
+        <h6>{quiz.description}</h6>
+      </div>
+      <hr />
       {displayedQuestions.map((question: QuizQuestion, index: number) => {
         switch (question.type) {
           case QuestionType.MULTIPLE_CHOICE:

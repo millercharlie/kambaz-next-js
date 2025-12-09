@@ -1,5 +1,6 @@
 'use client';
 
+import * as userClient from '@/app/(Kambaz)/Account/client';
 import {
   setQuizzes,
   updateQuiz,
@@ -67,6 +68,17 @@ const Quizzes = () => {
   const { quizzes } = useSelector((state: any) => state.quizzesReducer);
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
+  const sortQuizzes = (unsorted: Quiz[]): Quiz[] =>
+    unsorted.toSorted(
+      (a: Quiz, b: Quiz) =>
+        new Date(a.availableFrom).getTime() -
+        new Date(b.availableFrom).getTime()
+    );
+
+  const [sortedQuizzes, setSortedQuizzes] = React.useState<Quiz[]>(
+    sortQuizzes(quizzes)
+  );
+
   const addDraftQuiz = () => {
     dispatch(setQuizzes([...quizzes, draftQuiz]));
     redirect(`/Courses/${cid}/Quizzes/draft/QuizEditor`);
@@ -97,16 +109,25 @@ const Quizzes = () => {
     const takenQuiz: TakenQuiz = currentUser.takenQuizzes.find(
       (taken: TakenQuiz) => taken.quizId === quiz._id
     );
-    if (!takenQuiz) {
+    if (!takenQuiz && quiz.published) {
       return true;
     }
     const attempts: number = takenQuiz.attempt;
+    console.log(attempts);
+    // await userClient.updateUser({
+    //   ...currentUser,
+    //   takenQuizzes: [],
+    // });
     return attempts < quiz.numAttempts;
   };
 
   React.useEffect(() => {
     fetchQuizzes(cid as string);
-  }, []);
+  }, [cid]);
+
+  React.useEffect(() => {
+    setSortedQuizzes(sortQuizzes(quizzes));
+  }, [quizzes]);
 
   return (
     <div id='wd-quizzes'>
@@ -136,7 +157,7 @@ const Quizzes = () => {
               <BiSolidDownArrow className='me-2 fs-3' />
               Quizzes
             </div>
-            {quizzes.map((quiz: any, index: number) => {
+            {sortedQuizzes.map((quiz: any, index: number) => {
               if (
                 currentUser.role === 'ADMIN' ||
                 (currentUser.role !== 'ADMIN' && quiz.published)

@@ -33,10 +33,6 @@ const QuizQuestionEditor: React.FC<{
   );
   const { cid, qid } = useParams();
 
-  React.useEffect(() => {
-    console.log(questions);
-  }, [questions]);
-
   const handleAddQuestion = (type: QuestionType) => {
     setQuestions([
       ...questions,
@@ -55,10 +51,16 @@ const QuizQuestionEditor: React.FC<{
     );
   };
   const handleDeleteQuestion = (questionId: string) => {
+    console.log('called');
     setQuestions(questions.filter((q) => q._id !== questionId));
   };
   const handleSaveQuestions = () => {
     setQuiz({ ...quiz, questions });
+    if (quiz._id !== 'draft') {
+      redirect(`/Courses/${cid}/Quizzes/${qid}`);
+    } else {
+      redirect(`/Courses/${cid}/Quizzes/`);
+    }
   };
 
   const fetchQuizzes = async (cid: string) => {
@@ -70,9 +72,13 @@ const QuizQuestionEditor: React.FC<{
     quiz === undefined && fetchQuizzes(cid as string);
   }, []);
 
-  const QuestionTypeDropdown: React.FC = () => (
+  const QuestionTypeDropdown: React.FC<{ question: QuizQuestion }> = ({
+    question,
+  }) => (
     <Dropdown>
-      <DropdownToggle>Question Type</DropdownToggle>
+      <DropdownToggle>
+        {question.type.toUpperCase() || QuestionType.MULTIPLE_CHOICE}
+      </DropdownToggle>
       <DropdownMenu>
         <DropdownItem
           onClick={() => modifyQuestionType(QuestionType.MULTIPLE_CHOICE)}
@@ -102,7 +108,9 @@ const QuizQuestionEditor: React.FC<{
                     role='button'
                     onClick={() => handleDeleteQuestion(question._id)}
                   />
-                  {question._id === 'draft' && <QuestionTypeDropdown />}
+                  {question._id === 'draft' && (
+                    <QuestionTypeDropdown question={question} />
+                  )}
                 </div>
                 <MultipleChoiceEditor
                   question={question}
@@ -120,7 +128,9 @@ const QuizQuestionEditor: React.FC<{
                     role='button'
                     onClick={() => handleDeleteQuestion(question._id)}
                   />
-                  {question._id === 'draft' && <QuestionTypeDropdown />}
+                  {question._id === 'draft' && (
+                    <QuestionTypeDropdown question={question} />
+                  )}
                 </div>
                 <TrueFalseEditor
                   question={question}
@@ -138,7 +148,9 @@ const QuizQuestionEditor: React.FC<{
                     role='button'
                     onClick={() => handleDeleteQuestion(question._id)}
                   />
-                  {question._id === 'draft' && <QuestionTypeDropdown />}
+                  {question._id === 'draft' && (
+                    <QuestionTypeDropdown question={question} />
+                  )}
                 </div>
                 <WrittenResponseEditor
                   question={question}
@@ -176,7 +188,6 @@ const QuizQuestionEditor: React.FC<{
           onClick={(event) => {
             event.preventDefault();
             handleSaveQuestions();
-            redirect(`/Courses/${cid}/Quizzes/${qid}`);
           }}
         >
           Save

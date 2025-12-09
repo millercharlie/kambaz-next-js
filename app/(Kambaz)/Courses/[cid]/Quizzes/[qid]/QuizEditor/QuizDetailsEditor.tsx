@@ -33,6 +33,27 @@ const QuizDetailsEditor: React.FC<{
 }> = ({ quiz, quizzes, setQuiz, editing }) => {
   const { cid, qid } = useParams();
   const dispatch = useDispatch();
+  const [validated, setValidated] = React.useState<boolean>(false);
+  const [publish, setPublish] = React.useState<boolean>(false);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (publish) {
+      editing
+        ? onUpdateQuiz({ ...quiz, published: true })
+        : onAddQuiz({ ...quiz, published: true });
+      redirect(`/Courses/${cid}/Quizzes`);
+    } else {
+      editing
+        ? onUpdateQuiz({ ...quiz, published: false })
+        : onAddQuiz({ ...quiz, published: false });
+      redirect(
+        qid === draftQuiz._id
+          ? `/Courses/${cid}/Quizzes`
+          : `/Courses/${cid}/Quizzes/${qid}/QuizDetails`
+      );
+    }
+  };
 
   const onAddQuiz = async (quiz: Quiz) => {
     if (!cid) return;
@@ -45,6 +66,7 @@ const QuizDetailsEditor: React.FC<{
     dispatch(updateQuiz(newQuiz));
   };
   const modifyQuiz = (event: any, field: string) => {
+    console.log(event.target);
     if (field === 'timeLimit') {
       event.target.value === ''
         ? setQuiz({ ...quiz, timeLimit: 20 })
@@ -67,25 +89,32 @@ const QuizDetailsEditor: React.FC<{
 
   return (
     <div id='wd-quiz-details-editor' className='mt-3'>
-      <Form>
+      <Form validated={validated} onSubmit={handleSubmit}>
         <div>
           <FormLabel htmlFor='wd-name'>
             <b>Assignment Name</b>
           </FormLabel>
           <FormControl
+            required
             id='wd-name'
             className='mb-4'
             defaultValue={quiz.title}
             onChange={(event) => modifyQuiz(event, 'title')}
           />
         </div>
-        <FormControl
-          as='textarea'
-          id='wd-description'
-          defaultValue={quiz.description}
-          placeholder='Quiz Description'
-          onChange={(event) => modifyQuiz(event, 'description')}
-        />
+        <div>
+          <FormControl
+            required
+            as='textarea'
+            id='wd-description'
+            defaultValue={quiz.description}
+            placeholder='Quiz Description'
+            onChange={(event) => modifyQuiz(event, 'description')}
+          />
+          <Form.Control.Feedback type='invalid'>
+            Description is required.
+          </Form.Control.Feedback>
+        </div>
         <div className='w-75 mb-4 float-end text-nowrap'>
           <div className='d-flex gap-2 my-4 align-items-center'>
             <FormLabel htmlFor='wd-group-1' className='mb-0'>
@@ -103,9 +132,15 @@ const QuizDetailsEditor: React.FC<{
             <FormLabel htmlFor='wd-group-1' className='mb-0'>
               Quiz Type
             </FormLabel>
-            <FormSelect id='wd-group-1' className='text-uppercase'>
+            <FormSelect
+              id='wd-group-1'
+              className='text-uppercase'
+              onChange={(event) => modifyQuiz(event, 'type')}
+            >
               {Object.keys(QuizType).map((qt, index) => (
-                <option key={index}>{qt}</option>
+                <option key={index} value={qt}>
+                  {qt}
+                </option>
               ))}
             </FormSelect>
           </div>
@@ -113,9 +148,15 @@ const QuizDetailsEditor: React.FC<{
             <FormLabel htmlFor='wd-group-2' className='mb-0'>
               Assignment Group
             </FormLabel>
-            <FormSelect id='wd-group-2' className='text-uppercase'>
+            <FormSelect
+              id='wd-group-2'
+              className='text-uppercase'
+              onChange={(event) => modifyQuiz(event, 'assignmentGroup')}
+            >
               {Object.keys(AssignmentGroup).map((ag, index) => (
-                <option key={index}>{ag}</option>
+                <option key={index} value={ag}>
+                  {ag}
+                </option>
               ))}
             </FormSelect>
           </div>
@@ -251,7 +292,6 @@ const QuizDetailsEditor: React.FC<{
           <hr />
           <div className='float-end d-flex gap-2'>
             <Button
-              size='lg'
               variant='secondary'
               onClick={() =>
                 qid === draftQuiz._id
@@ -262,34 +302,18 @@ const QuizDetailsEditor: React.FC<{
               Cancel
             </Button>
             <Button
-              size='lg'
               variant='danger'
               type='submit'
-              onClick={(event) => {
-                event.preventDefault();
-                editing
-                  ? onUpdateQuiz({ ...quiz, published: false })
-                  : onAddQuiz({ ...quiz, published: false });
-                redirect(
-                  qid === draftQuiz._id
-                    ? `/Courses/${cid}/Quizzes`
-                    : `/Courses/${cid}/Quizzes/${qid}/QuizDetails`
-                );
-              }}
+              name='submit'
+              onClick={() => setPublish(false)}
             >
               Save
             </Button>
             <Button
-              size='lg'
               variant='primary'
               type='submit'
-              onClick={(event) => {
-                event.preventDefault();
-                editing
-                  ? onUpdateQuiz({ ...quiz, published: true })
-                  : onAddQuiz({ ...quiz, published: true });
-                redirect(`/Courses/${cid}/Quizzes`);
-              }}
+              name='publish_submit'
+              onClick={() => setPublish(true)}
             >
               Save and Publish
             </Button>

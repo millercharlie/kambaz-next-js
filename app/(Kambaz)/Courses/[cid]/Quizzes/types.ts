@@ -2,19 +2,19 @@
  * Different types of quizzes.
  */
 export enum QuizType {
-  GRADED_QUIZ = 'graded_quiz',
-  PRACTICE_QUIZ = 'practice_quiz',
-  GRADED_SURVEY = 'graded_survey',
-  UNGRADED_SURVEY = 'ungraded_survey',
+  GRADED_QUIZ = 'GRADED_QUIZ',
+  PRACTICE_QUIZ = 'PRACTICE_QUIZ',
+  GRADED_SURVEY = 'GRADED_SURVEY',
+  UNGRADED_SURVEY = 'UNGRADED_SURVEY',
 }
 /**
  * Type of assignment the quiz is a part of ?
  */
 export enum AssignmentGroup {
-  QUIZZES = 'quizzes',
-  EXAMS = 'exams',
-  ASSIGNMENTS = 'assignments',
-  PROJECT = 'project',
+  QUIZZES = 'QUIZZES',
+  EXAMS = 'EXAMS',
+  ASSIGNMENTS = 'ASSIGNMENTS',
+  PROJECT = 'PROJECT',
 }
 /**
  * Various question types.
@@ -95,6 +95,7 @@ export const draftQuiz: Quiz = {
   questions: [],
   showCorrect: true,
   shuffleAnswers: true,
-  type: undefined,
+  type: QuizType.GRADED_QUIZ,
   webcam: false,
+  assignmentGroup: AssignmentGroup.QUIZZES,
 };

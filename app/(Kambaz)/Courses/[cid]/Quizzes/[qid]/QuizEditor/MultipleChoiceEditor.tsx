@@ -130,11 +130,14 @@ const MultipleChoiceEditor: React.FC<{
                   <FaTrash
                     className='text-danger me-2'
                     role='button'
-                    onClick={() =>
+                    onClick={() => {
+                      console.log(choice);
+                      console.log(choice._id);
+                      console.log(possibleChoices);
                       setPossibleChoices(
                         possibleChoices.filter((pc) => pc._id !== choice._id)
-                      )
-                    }
+                      );
+                    }}
                   />
                 </div>
               ) : (
